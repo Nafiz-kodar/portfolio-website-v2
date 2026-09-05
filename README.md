@@ -4,7 +4,7 @@ Personal portfolio for a Computer Science and Engineering student working in
 data engineering and NLP. Static site, no framework, no build step, no runtime
 dependencies.
 
-**Live:** https://nafiz-kodar.github.io/Porfolio_project/
+**Live:** https://nafiz-kodar.github.io/portfolio-website-v2/
 
 <sub>Built with HTML, CSS and vanilla JavaScript · deployed on GitHub Pages</sub>
 
@@ -67,8 +67,8 @@ block at the top of the file.
 Clone and open:
 
 ```bash
-git clone https://github.com/Nafiz-kodar/Porfolio_project.git
-cd Porfolio_project
+git clone https://github.com/Nafiz-kodar/portfolio-website-v2.git
+cd portfolio-website-v2
 open index.html          # macOS — or just double-click the file
 ```
 
@@ -166,7 +166,7 @@ git commit -m "Update projects"
 git push
 ```
 
-Because the site is served from a subpath (`/Porfolio_project/`), three files
+Because the site is served from a subpath (`/portfolio-website-v2/`), three files
 carry that prefix and must be updated together if the URL ever changes: the
 canonical and Open Graph tags in `index.html`, the asset paths in `404.html`,
 and `sitemap.xml` / `robots.txt`.

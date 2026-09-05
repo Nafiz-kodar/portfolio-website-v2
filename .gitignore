@@ -16,3 +16,6 @@ _source/
 # Logs / temp
 *.log
 .cache/
+
+# Design reference (Figma exports) — working material, not site content
+_design/
