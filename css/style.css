@@ -31,8 +31,12 @@
   --ink: #000000;
   --ink-2: #1e1e1e;
   --ink-3: #5f6364;
-  --ink-4: #8b8f90;
-  --field: #a3a7a8;          /* the grey hero field from the Figma board */
+  --ink-4: #6f7375;  /* 4.79:1 on paper */
+  /* The hero field. The reference board uses #a3a7a8, but white type on it
+     is only 2.43:1 — below even the large-text floor. Darkened until white
+     clears 4.5:1 at every size (4.85:1), which keeps the reference's
+     white-on-grey relationship instead of inverting the type to dark. */
+  --field: #6f7272;
   --hairline: #d9d9d7;
   --hairline-2: #bfbfbd;
 
@@ -95,7 +99,7 @@
     --ink: #ffffff;
     --ink-2: #ededed;
     --ink-3: #a0a4a5;
-    --ink-4: #75797a;
+    --ink-4: #7e8283;
     --field: #2a2c2d;
     --hairline: #262626;
     --hairline-2: #383838;
@@ -114,7 +118,7 @@
   --ink: #ffffff;
   --ink-2: #ededed;
   --ink-3: #a0a4a5;
-  --ink-4: #75797a;
+  --ink-4: #7e8283;
   --field: #2a2c2d;
   --hairline: #262626;
   --hairline-2: #383838;
@@ -515,7 +519,7 @@ button {
   font-size: var(--fs-sm);
   line-height: 1.5;
   text-align: right;
-  color: rgba(255, 255, 255, 0.92);
+  color: #ffffff;
   text-wrap: pretty;
 }
 
@@ -713,17 +717,30 @@ button {
   align-items: start;
 }
 
+.about__photo {
+  border-radius: var(--r-tile);
+  overflow: hidden;
+  background: var(--paper-2);
+}
+
 .about__photo img {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  border-radius: var(--r-tile);
   filter: grayscale(1);
-  transition: filter 500ms var(--ease);
+  /* about.webp is the same circular crop on OPAQUE WHITE as the hero
+     portrait, so a 4:5 frame catches white in the corners — invisible on
+     the light theme, obvious on the dark one. The frame's half-diagonal
+     is ~1.28x the circle's radius, so anything past that scale keeps the
+     corners inside the photograph. Drop this to 1 if the image is ever
+     replaced with a full-bleed photo. */
+  transform: scale(1.34);
+  transition: filter 500ms var(--ease), transform 700ms var(--ease);
 }
 
 .about__photo img:hover {
   filter: grayscale(0);
+  transform: scale(1.38);
 }
 
 .about__body p + p {

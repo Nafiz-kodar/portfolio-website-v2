@@ -49,7 +49,7 @@ index.html ──▶ loads data/content.js  (plain <script>, defines CONTENT)
 
 `index.html` ships the page shell, the SEO tags and empty section containers.
 `js/main.js` renders the content into those containers on load and wires up the
-theme toggle, mobile navigation, scroll-spy and reveal animations.
+dock navigation, theme toggle, scroll-spy, hero marquee and reveal animations.
 
 Two deliberate decisions are worth knowing about:
 
@@ -125,6 +125,25 @@ experience: [
 Empty arrays are safe: a section with no entries renders a placeholder card
 rather than a blank gap, so the page never looks broken mid-edit.
 
+**Display copy**
+
+A few strings are set as display type and are deliberately short. Keep them to
+a line or two — they are the largest text on the page:
+
+| Field | Where it appears |
+| --- | --- |
+| `hero.role` | the oversized scrolling headline in the grey panel |
+| `hero.intro` | the small right-aligned paragraph in the top bar |
+| `about.lead` | the large opening statement |
+| `about.note` | the small paragraph beside it |
+| `skills[].blurb` | one sentence under each dark card |
+| `contact.kicker` / `contact.lead` | the monospace line and the big heading |
+| `footer.tagline` / `footer.wordmark` | the sign-off and the giant wordmark |
+
+A project without an `image` draws a typographic tile from its `mark` (or the
+title's initials), so the grid never shows a gap while you wait for a
+screenshot.
+
 The two things **not** in `content.js`:
 
 | What | Where |
@@ -152,6 +171,7 @@ The two things **not** in `content.js`:
 ├── robots.txt
 ├── sitemap.xml
 ├── .nojekyll               Serve files verbatim; do not run Jekyll
+├── _design/                Local only, gitignored — Figma reference exports
 └── _source/                Local only, gitignored — full-resolution originals
 ```
 
@@ -176,26 +196,57 @@ without reconstructing the cache and security headers. It is inert on Pages.
 
 ## Design system
 
+The layout is Swiss-editorial, adapted from a Figma reference kept in
+`_design/` (gitignored). Two rules carry most of the look, and both are easy to
+break by accident:
+
+1. **Headlines are never bold.** Scale carries the emphasis, not weight —
+   `--w-display` is 400. Raising it flattens the whole design.
+2. **Structure is drawn with 1px rules and whitespace**, not with bordered,
+   shadowed cards. Border-radius appears only on media tiles and the dark
+   cards.
+
 All visual decisions are CSS custom properties declared once in `:root`, with a
 dark variant that follows `prefers-color-scheme` and a `[data-theme]` override
-for the manual toggle. Changing the accent colour is a one-line edit.
+for the manual toggle. Changing the accent is a one-line edit.
 
-- **Type** — Inter for text, JetBrains Mono for labels and metadata. The scale
-  is fluid via `clamp()`, so it adapts without breakpoints.
-- **Colour** — a warm neutral ground with a single teal accent.
-- **Theme** — follows the operating system; the header toggle overrides it and
-  the choice persists in `localStorage`. An inline script in `<head>` applies
-  the saved theme before first paint, so there is no white flash.
+- **Type** — Inter Tight for everything, JetBrains Mono for micro-labels and
+  metadata. The scale is fluid via `clamp()`, so it adapts without breakpoints;
+  the hero headline runs up to `15rem`.
+- **Colour** — paper white, true black, a grey hero field, and a single indigo
+  accent (`#455ce9`, sampled from the reference). The black skills section
+  keeps its own fixed scale in both themes, so it reads identically either way.
+- **Navigation** — a floating pill dock rather than a top bar. Buttons are
+  generated in `main.js` from a `DOCK` array; an entry whose section is missing
+  from `index.html` is skipped, so it cannot leave a dead button behind. The
+  theme toggle lives in the footer, keeping the dock purely navigational.
+- **Motion** — the hero headline drifts on a marquee whose track is always two
+  identical halves, regrown on resize so the `-50%` loop stays seamless at any
+  width. It parks under `prefers-reduced-motion`.
 - **Responsive** — media queries sit beside the component they affect rather
   than in a separate file.
+
+### Working from the design reference
+
+`_design/` holds the Figma exports and is gitignored: it is working material,
+not site content. Anything from it that the site actually needs — the dock
+icons, for instance — is **inlined** into `js/main.js` rather than linked, so
+the site never depends on an untracked folder.
 
 ## Accessibility & performance
 
 - Skip-to-content link, semantic landmarks, and visible focus rings.
-- Text meets WCAG AA contrast in both themes (verified; the muted label colour
-  sits at 4.5:1).
-- The mobile menu reports `aria-expanded`, keeps its label in sync with its
-  state, and closes on <kbd>Esc</kbd>.
+- Text meets WCAG AA contrast in both themes, verified by computing every
+  foreground/background pair. Two values are set by that constraint rather than
+  by taste: the hero field is `#6f7272` rather than the reference's `#a3a7a8`
+  (white on the lighter grey is only 2.43:1, below even the large-text floor),
+  and `--ink-4` is darkened to clear 4.5:1 because it carries dates and channel
+  labels.
+- The dock buttons carry `aria-label`s; their visible tooltips are
+  `aria-hidden` so nothing is announced twice, and the current section is
+  reported with `aria-current`.
+- The marquee is `aria-hidden` and duplicates its phrase, so the heading is
+  exposed once, as a real `<h1>`.
 - All motion is disabled under `prefers-reduced-motion`.
 - Content rendered from `content.js` is HTML-escaped on the way in.
 - Photographs are 800 px WebP (32 KB and 45 KB, down from 1.7 MB and 2.0 MB
