@@ -13,8 +13,8 @@
  *      placeholder instead of an empty gap.
  *    - Anything marked OPTIONAL can be deleted entirely.
  *
- *  Source of truth: assets/docs/nafiz_resume(main).docx
- *  When you update the resume, update this file to match.
+ *  Source of truth: assets/docs/nafiz-ahmed-nafi-cv.docx
+ *  When you update the CV, update this file to match.
  */
 
 const CONTENT = {
@@ -38,7 +38,10 @@ const CONTENT = {
     location: "Dhaka, Bangladesh",
     photo: "assets/img/profile.webp",
     photoAlt: "Portrait of Nafiz Ahmed Nafi",
-    resume: "assets/docs/nafiz_resume(main).docx",
+    // Recommended: export your CV to PDF and point this at the .pdf instead.
+    // A PDF previews in the browser; a .docx forces a download and opens in
+    // Word, which is a worse first impression for a recruiter.
+    resume: "assets/docs/nafiz-ahmed-nafi-cv.docx",
     // Small facts shown under the intro. 2–4 works best.
     highlights: [
       { value: "7th", label: "worldwide, URC 2026" },
