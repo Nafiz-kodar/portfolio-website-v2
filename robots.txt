@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nafizahmednafi.netlify.app/sitemap.xml
+Sitemap: https://nafiz-kodar.github.io/Porfolio_project/sitemap.xml

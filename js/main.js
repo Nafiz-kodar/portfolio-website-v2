@@ -543,18 +543,28 @@
     var nav = document.getElementById("nav");
 
     if (toggle && links) {
+      // Single place that owns the menu state, so the label, the
+      // aria-expanded flag and the visual state can never disagree.
+      var setMenu = function (open) {
+        links.setAttribute("data-open", String(open));
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      };
+
       toggle.addEventListener("click", function () {
-        var open = links.getAttribute("data-open") === "true";
-        links.setAttribute("data-open", String(!open));
-        toggle.setAttribute("aria-expanded", String(!open));
-        toggle.setAttribute("aria-label", open ? "Open menu" : "Close menu");
+        setMenu(links.getAttribute("data-open") !== "true");
       });
 
       // Close the mobile menu after tapping a link
       links.addEventListener("click", function (e) {
-        if (e.target.closest("a")) {
-          links.setAttribute("data-open", "false");
-          toggle.setAttribute("aria-expanded", "false");
+        if (e.target.closest("a")) setMenu(false);
+      });
+
+      // Escape closes it and returns focus to the button
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && links.getAttribute("data-open") === "true") {
+          setMenu(false);
+          toggle.focus();
         }
       });
     }
