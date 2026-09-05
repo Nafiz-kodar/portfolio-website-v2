@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Local working files kept out of the repo
+# (high-resolution photo originals, template archives — back these up separately)
+_source/
+
+# Logs / temp
+*.log
+.cache/
