@@ -688,8 +688,9 @@ button {
   text-wrap: pretty;
 }
 
-/* About — portrait beside the prose. */
+/* About — portrait beside the prose. Always follows the facts strip. */
 .about {
+  margin-top: clamp(3rem, 7vw, 5.5rem);
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: clamp(2rem, 6vw, 5rem);

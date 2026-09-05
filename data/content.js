@@ -13,6 +13,11 @@
  *      placeholder instead of an empty gap.
  *    - Anything marked OPTIONAL can be deleted entirely.
  *
+ *  A NOTE ON LENGTH. The design sets several of these strings very large —
+ *  `about.lead`, `contact.lead` and `footer.tagline` are display type. Keep
+ *  them short (a line or two). The long-form writing belongs in
+ *  `about.paragraphs` and the project blurbs.
+ *
  *  Source of truth: assets/docs/nafiz-ahmed-nafi-cv.pdf
  *  When you update the CV, update this file to match.
  */
@@ -27,19 +32,24 @@ const CONTENT = {
    * ------------------------------------------------------------------ */
 
   /* --------------------------------------------------------------------
-   * HERO — the first thing a recruiter sees
+   * HERO — the grey full-bleed opening panel.
+   *   role     runs as the oversized scrolling headline. Keep it SHORT;
+   *            it is set at up to 15rem.
+   *   intro    the small right-aligned paragraph in the top bar. OPTIONAL —
+   *            falls back to `tagline`.
    * ------------------------------------------------------------------ */
   hero: {
-    greeting: "Hello, I'm",
     name: "Nafiz Ahmed Nafi",
     role: "Data Engineering & NLP",
+    intro:
+      "Computer Science and Engineering student at BRAC University, working on data pipelines, network systems and the language models that run on top of them.",
     tagline:
       "Computer Science and Engineering student at BRAC University. I build the plumbing behind machine learning — telemetry pipelines, resilient RF links and video streaming for a competition Mars rover — and research how language models leak the boilerplate they are trained on.",
     location: "Dhaka, Bangladesh",
     photo: "assets/img/profile.webp",
     photoAlt: "Portrait of Nafiz Ahmed Nafi",
     resume: "assets/docs/nafiz-ahmed-nafi-cv.pdf",
-    // Small facts shown under the intro. 2–4 works best.
+    // Small facts shown under the opening statement. 2–4 works best.
     highlights: [
       { value: "7th", label: "worldwide, URC 2026" },
       { value: "2nd", label: "South Asia, URC 2026" },
@@ -49,25 +59,38 @@ const CONTENT = {
 
   /* --------------------------------------------------------------------
    * ABOUT
+   *   lead        the large opening statement. Two lines at most.
+   *   note        the small right-hand paragraph beside it. OPTIONAL.
+   *   paragraphs  the long-form bio. Each string is its own paragraph,
+   *               and <b>bold</b> is allowed here.
    * ------------------------------------------------------------------ */
   about: {
+    lead: "I build the plumbing behind machine learning — the pipelines, the links and the telemetry that have to stay up in a field.",
+    note:
+      "Data engineering and NLP, with a working background in computer networking and RF communication. Most of what I know came from keeping systems running under a competition clock.",
     photo: "assets/img/about.webp",
     photoAlt: "Nafiz Ahmed Nafi",
-    // Each string is its own paragraph. <b>bold</b> is allowed.
     paragraphs: [
       "I'm a Computer Science and Engineering student specialising in <b>data engineering</b> and <b>NLP</b>, with a working background in <b>computer networking</b> and <b>RF communication</b>. Most of what I know came from having to make systems stay up in a field, under a competition clock.",
-      "I contributed to BRAC University's Mars Rover team, <b>BRACU Mongol Tori</b>, which placed <b>7th worldwide and 2nd in South Asia</b> at the University Rover Challenge 2026. I'm currently <b>Sub-Team Lead for Network & Vision</b>, where I built a 5.8&nbsp;GHz mesh with a failsafe configuration, video streaming pipelines in <b>FFmpeg</b> and <b>GStreamer</b>, and the rover's telemetry systems.",
+      "I contributed to BRAC University's Mars Rover team, <b>BRACU Mongol Tori</b>, which placed <b>7th worldwide and 2nd in South Asia</b> at the University Rover Challenge 2026. I'm currently <b>Sub-Team Lead for Network &amp; Vision</b>, where I built a 5.8&nbsp;GHz mesh with a failsafe configuration, video streaming pipelines in <b>FFmpeg</b> and <b>GStreamer</b>, and the rover's telemetry systems.",
       "Alongside that I lead and mentor: managing international teams, coordinating across sub-teams with Kanban, teaching ICT to students at under-resourced schools, and running workshops and contests for the university computer club. I care about delivering on schedule and leaving things documented enough for the next person.",
     ],
   },
 
   /* --------------------------------------------------------------------
-   * SKILLS
-   * level: "Experienced" | "Intermediate" | "Basic"  (drives the meter)
+   * SKILLS — rendered as the dark cards.
+   *   group  the card heading
+   *   blurb  one sentence under it. OPTIONAL, but the cards look thin
+   *          without one.
+   *   level  "Experienced" | "Intermediate" | "Basic"
+   *          Drives the three dots beside each item; anything else shows
+   *          no dots. The level is also read out to screen readers.
    * ------------------------------------------------------------------ */
   skills: [
     {
       group: "Programming & Data",
+      blurb:
+        "Turning messy sources into something queryable, and building the dashboards that sit on top of them.",
       items: [
         { name: "Python", level: "Experienced" },
         { name: "MySQL", level: "Intermediate" },
@@ -77,6 +100,8 @@ const CONTENT = {
     },
     {
       group: "Systems & Streaming",
+      blurb:
+        "Getting video and telemetry off a moving rover and onto a base-station screen without dropping frames.",
       items: [
         { name: "Linux", level: "Experienced" },
         { name: "FFmpeg", level: "Experienced" },
@@ -86,6 +111,8 @@ const CONTENT = {
     },
     {
       group: "Networking & RF",
+      blurb:
+        "Multi-band links that stay up when one of them doesn't — mesh topology, failover, and the field testing behind both.",
       items: [
         { name: "Multi-link RF (433 MHz – 5.8 GHz)", level: "Experienced" },
         { name: "Mesh & failsafe configuration", level: "Experienced" },
@@ -94,7 +121,7 @@ const CONTENT = {
     },
   ],
 
-  // Shown as simple pills — no proficiency meter.
+  // Shown as plain tags under the cards — no proficiency dots.
   softSkills: [
     "Kanban task tracking",
     "Jira",
@@ -113,7 +140,7 @@ const CONTENT = {
    * EXPERIENCE — newest first.
    *
    * Add a `period` (e.g. "Jan 2025 — Present") to any entry once you know
-   * the dates; the card renders fine without one.
+   * the dates; the row renders fine without one.
    * ------------------------------------------------------------------ */
   experience: [
     {
@@ -178,19 +205,24 @@ const CONTENT = {
    *     blurb: "What the question was, what you did, what you found.",
    *     tags: ["Python", "PyTorch"],
    *     image: "assets/img/projects/name.webp",   // OPTIONAL, 16:10 works best
+   *     imageAlt: "What the screenshot shows",    // OPTIONAL but do write it
+   *     mark: "PP",                               // OPTIONAL 2-char fallback
    *     links: [{ label: "GitHub", url: "https://..." }],   // OPTIONAL
-   *     featured: true,                            // OPTIONAL, wider card
    *   },
+   *
+   * With no `image`, the card draws a typographic tile using `mark` (or the
+   * title's initials) — so a project without a screenshot still looks
+   * deliberate. Add the screenshot when you have one.
    * ------------------------------------------------------------------ */
   projects: [
     {
       title: "Quantifying Boilerplate Leakage in Privacy Policy Classification",
       kind: "Independent research",
       status: "Ongoing",
+      mark: "PP",
       blurb:
         "Measuring how much boilerplate language leaks between training and test splits when classifying privacy policies, using a corpus of policies from Bangladesh — and what that inflated overlap does to reported model accuracy.",
       tags: ["NLP", "Python", "Dataset analysis"],
-      featured: true,
       links: [
         {
           label: "GitHub",
@@ -206,10 +238,10 @@ const CONTENT = {
       title: "Backdoor Detection in Deep Neural Networks",
       kind: "Independent research",
       status: "Ongoing",
+      mark: "BD",
       blurb:
         "Investigating trigger-independent backdoor detection through neuron-activation and weight analysis, evaluated against the TrojAI and BackdoorBench datasets.",
       tags: ["Deep learning", "Model security", "TrojAI", "BackdoorBench"],
-      featured: true,
     },
   ],
 
@@ -245,10 +277,15 @@ const CONTENT = {
   certifications: [],
 
   /* --------------------------------------------------------------------
-   * CONTACT & SOCIAL
-   * icon: "email" | "linkedin" | "github" | "phone"
+   * CONTACT
+   *   kicker  the small monospace line above the heading
+   *   lead    the large heading. Keep it to a few words.
+   *   The blue "Get in touch" disc links to whichever channel has
+   *   icon: "email", so keep one.
    * ------------------------------------------------------------------ */
   contact: {
+    kicker: "That's all for now.",
+    lead: "Got something to build? Let's talk",
     blurb:
       "I'm open to internships and roles in data engineering, NLP and network systems, and glad to talk about research collaboration. Email reaches me fastest.",
     channels: [
@@ -271,6 +308,18 @@ const CONTENT = {
         url: "https://github.com/Nafiz-kodar",
       },
     ],
+  },
+
+  /* --------------------------------------------------------------------
+   * FOOTER
+   *   wordmark  set enormous and allowed to run off the right edge, so a
+   *             long value is fine — it is decorative and hidden from
+   *             screen readers. Defaults to hero.name.
+   * ------------------------------------------------------------------ */
+  footer: {
+    tagline: "Building the plumbing behind the models.",
+    wordmark: "Nafiz Ahmed Nafi",
+    note: "Built from scratch with HTML, CSS and vanilla JavaScript.",
   },
 
   socials: [
