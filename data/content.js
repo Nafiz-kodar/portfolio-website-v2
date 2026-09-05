@@ -191,6 +191,16 @@ const CONTENT = {
         "Measuring how much boilerplate language leaks between training and test splits when classifying privacy policies, using a corpus of policies from Bangladesh — and what that inflated overlap does to reported model accuracy.",
       tags: ["NLP", "Python", "Dataset analysis"],
       featured: true,
+      links: [
+        {
+          label: "GitHub",
+          url: "https://github.com/Nafiz-kodar/PRIVACY_POLICY_PAPER",
+        },
+        {
+          label: "Live demo",
+          url: "https://privacy-policy-leakage-aware-classifier.vercel.app",
+        },
+      ],
     },
     {
       title: "Backdoor Detection in Deep Neural Networks",
