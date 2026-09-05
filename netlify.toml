@@ -1,0 +1,39 @@
+# Netlify configuration
+# There is no build step — Netlify serves the repository root as-is.
+
+[build]
+  publish = "."
+  command = ""
+
+# Security headers. These cost nothing on a static site and stop the site
+# being framed by someone else or sniffed into the wrong content type.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Fingerprint-free assets: cache hard but let HTML revalidate, so a content
+# edit shows up immediately while images stay cached.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# content.js and main.js change whenever you edit the site — revalidate them.
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

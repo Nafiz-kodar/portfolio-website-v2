@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page not found — Nafiz Ahmed Nafi</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "dark" || saved === "light") {
+            document.documentElement.setAttribute("data-theme", saved);
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <main
+      class="container"
+      style="
+        min-height: 100dvh;
+        display: grid;
+        place-content: center;
+        text-align: center;
+        gap: 1rem;
+      "
+    >
+      <p class="eyebrow" style="justify-content: center">Error 404</p>
+      <h1 style="font-size: var(--fs-h1)">Page not found</h1>
+      <p style="color: var(--text-2); max-width: 32rem; margin-inline: auto">
+        That link doesn't lead anywhere. It may have moved, or never existed.
+      </p>
+      <p><a class="btn btn--primary" href="/">Back to the portfolio</a></p>
+    </main>
+  </body>
+</html>
