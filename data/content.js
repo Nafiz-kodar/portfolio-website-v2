@@ -19,17 +19,12 @@
 
 const CONTENT = {
   /* --------------------------------------------------------------------
-   * SITE META — browser tab, Google results, link previews
+   * NOTE ON SEO
+   * The page title, Google description and LinkedIn/Twitter link-preview
+   * tags are NOT here — they live in the <head> of index.html, because
+   * social crawlers do not run JavaScript and have to read them straight
+   * from the HTML. There is a clearly marked block at the top of that file.
    * ------------------------------------------------------------------ */
-  meta: {
-    siteUrl: "https://nafizahmednafi.netlify.app",
-    title: "Nafiz Ahmed Nafi — Data Engineering & NLP",
-    // Keep under ~155 characters: this is the grey text under your Google
-    // result and the subtitle on LinkedIn link previews.
-    description:
-      "CSE student at BRAC University working in data engineering and NLP. Network & Vision sub-team lead on BRACU Mongol Tori, 7th worldwide at URC 2026.",
-    ogImage: "assets/img/og-cover.jpg",
-  },
 
   /* --------------------------------------------------------------------
    * HERO — the first thing a recruiter sees
