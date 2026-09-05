@@ -76,7 +76,7 @@
   /* Space & shape */
   --wrap: 1440px;
   --gutter: clamp(1.25rem, 5vw, 5rem);
-  --section-y: clamp(4.5rem, 11vw, 10rem);
+  --section-y: clamp(4rem, 8vw, 7.5rem);
   --r-tile: 16px;
   --r-card: 22px;
   --r-pill: 999px;
@@ -542,12 +542,28 @@ button {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  object-position: 50% 22%;
-  /* Grayscale is doing real work here: it welds the portrait to the grey
-     field so the composition reads as one surface, as in the reference. */
+  /* Two things are happening here, and both are deliberate:
+
+     1. The source portrait is a circular crop sitting on OPAQUE WHITE — it
+        has no alpha. Left alone it shows as a white square on the grey
+        field. The radial mask clips the white away and feathers what is
+        left, so the disc dissolves into the field instead of ending on a
+        hard edge. If you ever swap in a true cut-out PNG, this can go.
+     2. Grayscale welds the portrait to the grey field so the composition
+        reads as one surface, as it does in the reference design. */
   filter: grayscale(1) contrast(1.04);
-  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 99%);
-  mask-image: linear-gradient(to bottom, #000 72%, transparent 99%);
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 50%,
+    #000 55%,
+    rgba(0, 0, 0, 0.5) 63%,
+    transparent 68%
+  );
+  mask-image: radial-gradient(
+    circle at 50% 50%,
+    #000 55%,
+    rgba(0, 0, 0, 0.5) 63%,
+    transparent 68%
+  );
 }
 
 .hero__scroll {
@@ -592,7 +608,7 @@ button {
   align-items: center;
   gap: 0.35em;
   padding-right: 0.35em;
-  animation: marquee 38s linear infinite;
+  animation: marquee 60s linear infinite;
   will-change: transform;
 }
 
@@ -807,20 +823,26 @@ button {
 .work-card__tile::before {
   content: "";
   position: absolute;
-  inset: -40% -10% auto -10%;
-  height: 130%;
+  inset: 0;
+  /* Two offset washes rather than one centred glow — a single radial reads
+     as a vignette, two reads as light falling across the tile. Keep the
+     bright centre INSIDE the box; pushing it outside (a negative inset)
+     leaves only the transparent tail visible and the tile looks flat. */
   background: radial-gradient(
-    60% 55% at 30% 0%,
-    color-mix(in srgb, var(--accent) 55%, transparent),
-    transparent 70%
-  );
-  opacity: 0.75;
+      78% 72% at 20% 6%,
+      color-mix(in srgb, var(--accent) 80%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      62% 60% at 95% 100%,
+      color-mix(in srgb, var(--accent) 32%, transparent),
+      transparent 70%
+    );
   transition: opacity 600ms var(--ease), transform 700ms var(--ease);
 }
 
 .work-card:hover .work-card__tile::before {
-  opacity: 1;
-  transform: translateY(-4%) scale(1.06);
+  transform: scale(1.08);
 }
 
 .work-card__tile > * {

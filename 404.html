@@ -5,14 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Page not found — Nafiz Ahmed Nafi</title>
     <meta name="robots" content="noindex" />
+
+    <!-- GitHub Pages serves this file for any missing path under the repo,
+         including nested ones, so these have to be absolute from the site
+         root — a relative href would resolve against the missing path.
+         If this site ever moves off a project page, drop the prefix. -->
     <link rel="icon" href="/portfolio-website-v2/assets/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/portfolio-website-v2/css/style.css" />
+
     <script>
       (function () {
         try {
@@ -20,27 +29,67 @@
           if (saved === "dark" || saved === "light") {
             document.documentElement.setAttribute("data-theme", saved);
           }
-        } catch (e) {}
+        } catch (e) {
+          /* private mode — fall back to the OS preference */
+        }
       })();
     </script>
-  </head>
-  <body>
-    <main
-      class="container"
-      style="
+
+    <style>
+      /* Page-specific: the 404 is one screen, centred, with the same
+         oversized-numeral move the rest of the site uses for display type. */
+      .notfound {
         min-height: 100dvh;
         display: grid;
-        place-content: center;
-        text-align: center;
-        gap: 1rem;
-      "
-    >
-      <p class="eyebrow" style="justify-content: center">Error 404</p>
-      <h1 style="font-size: var(--fs-h1)">Page not found</h1>
-      <p style="color: var(--text-2); max-width: 32rem; margin-inline: auto">
-        That link doesn't lead anywhere. It may have moved, or never existed.
+        align-content: center;
+        gap: 1.25rem;
+        padding-block: 4rem;
+      }
+
+      .notfound__code {
+        font-size: clamp(5rem, 22vw, 16rem);
+        font-weight: var(--w-display);
+        line-height: 0.82;
+        letter-spacing: -0.06em;
+        margin-left: -0.06em;
+      }
+
+      .notfound__body {
+        max-width: 34rem;
+        color: var(--ink-3);
+        font-size: var(--fs-lead);
+        text-wrap: pretty;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="wrap notfound">
+      <p class="micro">Error 404</p>
+      <p class="notfound__code" aria-hidden="true">404</p>
+      <h1 style="font-size: var(--fs-h2)">This page doesn't exist</h1>
+      <p class="notfound__body">
+        The link may have moved, or it may never have existed. Everything else
+        is one click away.
       </p>
-      <p><a class="btn btn--primary" href="/portfolio-website-v2/">Back to the portfolio</a></p>
+      <p style="margin-top: 1rem">
+        <a class="link-arrow" href="/portfolio-website-v2/">
+          <span>Back to the portfolio</span>
+          <span class="circle">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M7 17 17 7M8.5 7H17v8.5" />
+            </svg>
+          </span>
+        </a>
+      </p>
     </main>
   </body>
 </html>
